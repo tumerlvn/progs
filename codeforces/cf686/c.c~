@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int main() {
+    int iter;
+    scanf("%d", &iter);
+    for (int j = 0; j < iter; j++) {
+        int n;
+        scanf("%d", &n);
+        int *arr = malloc(n * sizeof(int));
+        int *ch = malloc(n * sizeof(int));
+        int *far = malloc(n * sizeof(int));
+        int size = 1;
+
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &(arr[i]));
+        }
+        far[0] = arr[0];
+        int prev = far[0];
+        for (int i = 1; i < n; i++) {
+            if (arr[i] != prev) {
+                far[size] = arr[i];
+                prev = far[size];
+                size++;
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            ch[i] = -2147483648;
+        }
+        for (int i = 0; i < size; i++) {
+            if (ch[far[i] - 1] == -2147483648) ch[far[i] - 1] = 0;
+            ch[far[i] - 1]++;
+        }
+        ch[far[0] - 1]--;
+        ch[far[size-1] - 1]--;
+        int mini = 0;
+        for (int i = 1; i < n; i++) {
+            if (ch[i] > -2147483648 && ch[i] < ch[mini]) mini = i;
+        }
+        
+        if (ch[mini] == n - 2) {
+            printf("0\n");
+        } else { 
+            printf("%d\n", (ch[mini] + 1));
+        }
+        free(arr);
+        free(ch);
+        free(far);
+    }
+}

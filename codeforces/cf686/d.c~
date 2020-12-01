@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+int main() {
+    int iter;
+    scanf("%d", &iter);
+    for (int j = 0; j < iter; j++) {
+        long long n;
+        scanf("%lld", &n);
+        long long tmp = n;
+        long long div = 2, flag = 0, size = 0;
+        int curcnt = 0;
+        int maxcnt = 0;
+        int maxdiv;
+        while (n > 1 ) {
+            if (div > (int)sqrt(tmp)) {
+                maxdiv = tmp;
+                maxcnt = 1;
+            }
+            while (n % div == 0) { 
+                n /= div;
+                curcnt++;
+            }
+            if (curcnt > maxcnt) {
+                maxdiv = div;
+                maxcnt = curcnt;
+                curcnt = 0;
+            }
+            div++;
+        }
+        printf("%d\n", maxcnt);
+        for (int i = 0; i < maxcnt - 1; i++) { 
+            printf("%d ", maxdiv);
+            tmp /= maxdiv;
+        }
+
+        printf("%lld", tmp);
+        puts("");
+    }
+}

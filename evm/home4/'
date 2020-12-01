@@ -1,0 +1,21 @@
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char **argv) {
+    int size = atoi(argv[1]);
+    pid_t pid;
+
+    for (int i = 1; i < size; i++) {
+        pid = fork();
+        if (pid) {
+            printf("%u %u\n", getpid(), getppid());
+            break;
+        }
+    }
+    if(pid == 0) {
+        printf("%u %u\n", getpid(), getppid());
+    }
+    return 0;
+}
